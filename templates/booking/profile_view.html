@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Мій профіль — BookEasy{% endblock %}
+
+{% block content %}
+<h2>👤 Профіль користувача</h2>
+
+
+<div class="mb-4 text-start">
+    <p><strong>Імʼя користувача:</strong> {{ request.user.username }}</p>
+    <p><strong>Email:</strong> {{ request.user.email }}</p>
+    <p><strong>Дата приєднання:</strong> {{ request.user.date_joined|date:"d.m.Y" }}</p>
+</div>
+
+<button class="btn-main" onclick="toggleBookings()">📋 Подивитись бронювання</button>
+
+<div id="bookings-block" class="mt-4" style="display: none;">
+    <h3>Ваші бронювання</h3>
+
+    {% if bookings %}
+        <ul class="list-group">
+            {% for booking in bookings %}
+            {% if location.image %}
+                <img src="{{ location.image.url }}" alt="{{ location.title }}" width="200" class="img-thumbnail mb-3">
+            {% endif %}
+
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <strong>Локація:</strong> {{ booking.location.title }} <br>
+                        <strong>Початок:</strong> {{ booking.start_date|date:"d.m.Y" }} <br>
+                        <strong>Кінець:</strong> {{ booking.end_date|date:"d.m.Y" }} <br>
+                        <strong>Підтверджено:</strong>
+                        {% if booking.is_confirmed %}
+                            <span class="text-success">Так</span>
+                        {% else %}
+                            <span class="text-warning">Ні</span>
+                        {% endif %}
+                    </div>
+
+                    {% if not booking.is_confirmed %}
+                    <form method="post" action="{% url 'main:delete_booking' booking.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm mt-2">🗑️ Видалити</button>
+                    </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mt-3">У вас немає бронювань.</p>
+    {% endif %}
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'main:home' %}" class="btn btn-outline-secondary">⬅️ На головну</a>
+</div>
+
+<script>
+    function toggleBookings() {
+        const block = document.getElementById('bookings-block');
+        block.style.display = block.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+{% endblock %}

@@ -1,15 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {{ render_string }}
- {% if request.user.is_authenticated %}
-    <h1> you authenticated user</h1>
-{% else %}
-    <h1> you unauthenticated user</h1>
-{% endif %}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Головна — BookEasy{% endblock title %}
+{% block header %}👋 Вітаємо в <span class="brand-name">BookEasy</span>!{% endblock header %}
+<script>
+    setTimeout(function () {
+        const alert = document.getElementById("loginAlert");
+        if (alert) {
+            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+            bsAlert.close();
+        }
+    }, 3000);
+</script>
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+    <div id="loginAlert" class="alert alert-success alert-dismissible fade show text-start fw-bold fs-5" role="alert">
+        ✅ Ви увійшли як <strong>{{ request.user.username }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+        <div class="btn-wrapper">
+            <a href="{% url 'main:reservation_list' %}" class="btn-main">📍 Доступні локації</a>
+            <a href="{% url 'main:book_location' %}" class="btn-main">📅 Забронювати</a>
+        </div>
+
+        <div class="divider"></div>
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger mt-3">🚪 Вийти</a>
+
+    {% else %}
+        <p class="status logged-out text-danger fw-bold fs-5">
+            ❌ Ви не увійшли в систему.
+        </p>
+
+        <div class="btn-wrapper">
+            <a href="{% url 'login' %}" class="btn-main">🔑 Увійти</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-secondary">📝 Зареєструватись</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Бронювання{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">📅 Забронювати локацію</h2>
+
+  <form method="post" class="text-start">
+                  {% csrf_token %}
+      <div class="mb-4">
+          <label for="location-title" class="form-label">🏢 Локація</label>
+          <input type="text" class="form-control" id="location-title" name="location-title"
+                 value="{{ location_title }}" readonly required>
+      </div>
+
+      <div class="mb-4">
+          <label for="start-time" class="form-label">📆 Дата початку</label>
+          <input type="date" class="form-control" id="start-time" name="start-time" required>
+      </div>
+
+      <div class="mb-4">
+          <label for="end-time" class="form-label">📆 Дата завершення</label>
+          <input type="date" class="form-control" id="end-time" name="end-time" required>
+      </div>
+
+      <button type="submit" class="btn btn-main">✅ Підтвердити бронювання</button>
+
+      <div class="mt-4">
+    <a href="{% url 'main:reservation_list' %}" class="btn btn-outline-secondary">⬅️ Відхилити та повернутися</a>
+      </div>
+  </form>
+
+{% endblock %}

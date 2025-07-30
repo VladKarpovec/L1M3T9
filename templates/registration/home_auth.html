@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Реєстрація{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Що ви хочете зробити?</h2>
+
+    <div class="btn-wrapper">
+        <a href="{% url 'register' %}" class="btn-main">Зареєструватися</a>
+        <a href="{% url 'login' %}" class="btn-main">Ввійти</a>
+    </div>
+{% endblock %}

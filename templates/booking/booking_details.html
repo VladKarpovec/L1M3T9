@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+<div class="mt-4">
+    <a href="{% url 'main:home' %}" class="btn btn-secondary me-2">⬅️ Повернутися на головний екран</a>
+    <a href="{% url 'main:profile_view' %}" class="btn btn-primary">📋 Переглянути мої бронювання(не працює)</a>
+</div>
+
+</form>
+{% endblock %}

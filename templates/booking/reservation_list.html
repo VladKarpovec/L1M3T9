@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Список Локацій{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="heading">Доступні локації</h2>
+    <hr class="divider">
+
+    {% if reservation_list %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for location in reservation_list %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            {% if location.image %}
+                                <img src="{{ location.image.url }}" alt="{{ location.title }}" width="200" class="img-thumbnail mb-3">
+                            {% endif %}
+
+                            <h5 class="card-title">{{ location.title }}</h5>
+                            <p class="card-text"><strong>Місткість:</strong> {{ location.capacity }}</p>
+                            <p class="card-text"><strong>Ціна:</strong> ${{ location.price }}</p>
+                            <p class="card-text"><strong>Опис:</strong> {{ location.description }}</p>
+                            <a href="{% url 'main:book_location' %}?location={{ location.title }}" class="btn btn-main mt-3">
+                            Забронювати
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Наразі немає доступних локацій.</p>
+    {% endif %}
+</div>
+{% endblock %}

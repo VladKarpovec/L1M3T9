@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Підтвердження бронювання</title>
 </head>
-<body>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <div style="background-color: #ffffff; border-radius: 5px; padding: 20px;">
+        <h2 style="color: #333;">Сайт бронювань "{{ site_name }}"</h2>
+        <p>Вітаємо, {{ user.first_name }}!</p>
+        <p>Ви забронювали локацію <strong>{{ booking.location.title }}</strong>.</p>
 
+        {% if booking.location.photo %}
+        <div style="margin: 20px 0;">
+            <img src="{{ booking.location.photo.url }}" alt="Фото локації {{ booking.location.title }}" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        {% endif %}
+
+        <ul>
+            <li><strong>Дата початку:</strong> {{ booking.start_date|date:"d.m.Y" }}</li>
+            <li><strong>Дата завершення:</strong> {{ booking.end_date|date:"d.m.Y" }}</li>
+            <li><strong>Ціна:</strong> {{ booking.location.price }} грн</li>
+        </ul>
+        <p>Для підтвердження бронювання, перейдіть за посиланням нижче:</p>
+        <p><a href="{{ confirmation_url }}" style="color: #1a73e8;">Підтвердити бронювання</a></p>
+        <p>Дякуємо за користування нашим сервісом!</p>
+    </div>
 </body>
 </html>
