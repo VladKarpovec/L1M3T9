@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {{ render_string }}
+ {% if request.user.is_authenticated %}
+    <h1> you authenticated user</h1>
+{% else %}
+    <h1> you unauthenticated user</h1>
+{% endif %}
+</body>
+</html>
